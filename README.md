@@ -39,4 +39,4 @@ La aplicación trabaja sobre la colección **`productos`** en Cloud Firestore co
 5. Abrir el navegador en `http://localhost:4200`.
 
 ## Despliegue en Producción (Vercel)
-- **URL de la aplicación desplegada:** https://TU-ENLACE-REAL.vercel.app
+- **URL de la aplicación desplegada:** https://crud-productos-firebase.vercel.app
