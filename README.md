@@ -1,59 +1,42 @@
-# CRUDProductos
+# Gestión de Productos — CRUD con Angular y Cloud Firestore
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.6.
+## Propósito de la Aplicación
+Aplicación web interactiva desarrollada con **Angular** y **Firebase (Cloud Firestore)** que permite administrar un inventario de productos en la nube en tiempo real, garantizando la persistencia de datos y aplicando validaciones estrictas en el cliente.
 
-## Development server
+## Funciones del CRUD Implementadas
+Todas las operaciones de acceso a datos están centralizadas en `ProductoService`:
+- **Crear (`crearProducto`):** Registra nuevos productos en la colección `productos` mediante `addDoc()`, validando previamente que el nombre y la categoría no estén vacíos, que el precio sea numérico $\ge 0$ y que el stock sea un número entero $\ge 0$.
+- **Consultar (`obtenerProductos`):** Recupera todos los documentos almacenados en Cloud Firestore mediante `getDocs()` ordenados alfabéticamente por nombre, conservando el `id` único de cada documento y mostrándolos en una tabla dinámica.
+- **Actualizar (`actualizarProducto`):** Carga los datos del producto seleccionado en el formulario y guarda las modificaciones directamente sobre el documento correspondiente en Firestore usando `updateDoc()` y su identificador.
+- **Eliminar (`eliminarProducto`):** Solicita confirmación explícita al usuario antes de borrar el documento mediante `deleteDoc()`. Si el usuario cancela, el registro se conserva intacto.
 
-To start a local development server, run:
+## Modelo de Datos (`Producto`)
+La aplicación trabaja sobre la colección **`productos`** en Cloud Firestore con la siguiente estructura tipada (`src/app/models/producto.model.ts`):
+- `id` (`string`, opcional): Identificador único autogenerado por Cloud Firestore.
+- `nombre` (`string`): Nombre descriptivo del producto.
+- `precio` (`number`): Precio unitario del producto ($\ge 0$).
+- `stock` (`number`): Cantidad entera disponible en inventario ($\ge 0$).
+- `categoria` (`string`): Categoría a la que pertenece el producto.
 
-```bash
-ng serve
-```
+## Configuración de Firebase e Instalación Local
+1. Clonar el repositorio:
+   ```bash
+   git clone [https://github.com/FelipePhipe/crud-productos-firebase.git](https://github.com/FelipePhipe/crud-productos-firebase.git)
+   ```
+2. Entrar al directorio del proyecto e instalar dependencias:
+   ```bash
+   cd crud-productos-firebase
+   npm install
+   ```
+3. Configurar las credenciales de Firebase:
+   - Crear un proyecto en [Firebase Console](https://console.firebase.google.com/) y habilitar **Cloud Firestore**.
+   - Registrar una aplicación web y copiar el objeto `firebaseConfig`.
+   - Crear el archivo `src/environments/environment.development.ts` (excluido de Git por seguridad) o completar `src/environments/environment.ts` con las credenciales propias de `firebaseConfig`.
+4. Iniciar el servidor de desarrollo local:
+   ```bash
+   ng serve -o
+   ```
+5. Abrir el navegador en `http://localhost:4200`.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Despliegue en Producción (Vercel)
+- **URL de la aplicación desplegada:** https://TU-ENLACE-REAL.vercel.app
